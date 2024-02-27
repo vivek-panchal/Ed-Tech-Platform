@@ -52,6 +52,7 @@ exports.categoryPageDetails = async (req, res) => {
 			.populate("courses")
 			.exec();
 		console.log(selectedCategory);
+
 		// Handle the case when the category is not found
 		if (!selectedCategory) {
 			console.log("Category not found.");
@@ -59,6 +60,7 @@ exports.categoryPageDetails = async (req, res) => {
 				.status(404)
 				.json({ success: false, message: "Category not found" });
 		}
+		 
 		// Handle the case when there are no courses
 		if (selectedCategory.courses.length === 0) {
 			console.log("No courses found for the selected category.");
@@ -74,6 +76,7 @@ exports.categoryPageDetails = async (req, res) => {
 		const categoriesExceptSelected = await Category.find({
 			_id: { $ne: categoryId },
 		}).populate("courses");
+		
 		let differentCourses = [];
 		for (const category of categoriesExceptSelected) {
 			differentCourses.push(...category.courses);

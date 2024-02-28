@@ -78,7 +78,7 @@ const otpTemplate = (otp) => {
 				Once your account is verified, you will have access to our platform and its features.</p>
 			</div>
 			<div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
-					href="mailto:info@studynotion.com">info@studynotion.com</a>. We are here to help!</div>
+					href="mailto:mailbystudynotion@gmail.com">mailbystudynotion@gmail.com</a>. We are here to help!</div>
 		</div>
 	</body>
 	

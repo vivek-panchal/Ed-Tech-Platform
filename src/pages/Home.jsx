@@ -6,6 +6,11 @@ import HighlightText from '../components/core/HomePage/HighlightText'
 import CTAButton from "../components/core/HomePage/Button"
 import Banner from "../assets/Images/banner.mp4"
 import CodeBlocks from "../components/core/HomePage/CodeBlocks"
+import TimelineSection from '../components/core/HomePage/TimelineSection'
+import LearningLanguageSection from '../components/core/HomePage/LearningLanguageSection'
+import InstructorSection from '../components/core/HomePage/InstructorSection'
+import Footer from '../components/common/Footer'
+import ExploreMore from '../components/core/HomePage/ExploreMore'
 
 const Home = () => {
   return (
@@ -62,7 +67,7 @@ const Home = () => {
                 heading={
                     <div className='text-4xl font-semibold'>
                         Unlock Your
-                        <HighlightText text={"coding potential "}/>
+                        <HighlightText text={"coding potential"}/>
                         with our online courses
                     </div>
                 }
@@ -89,14 +94,14 @@ const Home = () => {
             />
         </div>
 
-        {/* Code Section 2 */}
+                {/* Code Section 2 */}
         <div>
             <CodeBlocks 
                 position={"lg:flex-row-reverse"}
                 heading={
                     <div className='text-4xl font-semibold'>
                         Unlock Your
-                        <HighlightText text={"coding potential "}/>
+                        <HighlightText text={"coding potential"}/>
                         with our online courses
                     </div>
                 }
@@ -123,16 +128,81 @@ const Home = () => {
             />
         </div>
 
+            <ExploreMore />
       </div>
 
       {/*Section 2  */}
+      <div className='bg-pure-greys-5 text-richblack-700'>
+            <div className='homepage_bg h-[310px]'>
+
+                <div className='w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-5 mx-auto'>
+                    <div className='h-[150px]'></div>
+                    <div className='flex flex-row gap-7 text-white '>
+                        <CTAButton active={true} linkto={"/signup"}>
+                            <div className='flex items-center gap-3' >
+                                Explore Full Catalog
+                                <FaArrowRight />
+                            </div>
+                            
+                        </CTAButton>
+                        <CTAButton active={false} linkto={"/signup"}>
+                            <div>
+                                Learn more
+                            </div>
+                        </CTAButton>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div className='mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7'>
+
+                <div className='flex flex-row gap-5 mb-10 mt-[95px]'>
+                    <div className='text-4xl font-semibold w-[45%]'>
+                        Get the Skills you need for a
+                        <HighlightText text={"Job that is in demand"} />
+                    </div>
+
+                    <div className='flex flex-col gap-10 w-[40%] items-start'>
+                    <div className='text-[16px]'>
+                    The modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
+                    </div>
+                    <CTAButton active={true} linkto={"/signup"}>
+                        <div>
+                            Learn more
+                        </div>
+                    </CTAButton>
+                    </div>
+
+                </div>
+                
+                
+
+                <TimelineSection />
+
+                <LearningLanguageSection />
+
+            </div>
+
+            
+
+      </div>
 
 
       {/*Section 3 */}
+      <div className='w-11/12 mx-auto max-w-maxContent flex-col items-center justify-between gap-8 first-letter bg-richblack-900 text-white'>
+
+            <InstructorSection />
+
+            <h2 className='text-center text-4xl font-semobold mt-10'>review from Other Learners</h2>
+            {/* Review Slider here */}
+      </div>
 
 
       {/*Footer */}
-
+      <Footer />
 
     </div>
   )

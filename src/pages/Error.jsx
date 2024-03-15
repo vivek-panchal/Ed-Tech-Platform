@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Footer from '../components/common/Footer'
 
 const Error = () => {
   return (
-    <section className="p-[40px] bg-white pt-[100px] ">
+    <section className="p-[0px] bg-white pt-[100px] ">
       <div>
         <div>
           <div>
@@ -29,6 +30,7 @@ const Error = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </section>
   )
 }

@@ -139,7 +139,7 @@ exports.getEnrolledCourses = async (req, res) => {
 
 exports.updateDisplayPicture = async (req, res) => {
     try {
-      const displayPicture = req.files.displayPicture
+      const displayPicture = req?.files?.displayPicture
       const userId = req.user.id
       const image = await uploadImageToCloudinary(
         displayPicture,
@@ -150,7 +150,7 @@ exports.updateDisplayPicture = async (req, res) => {
       console.log(image)
       const updatedProfile = await User.findByIdAndUpdate(
         { _id: userId },
-        { image: image.secure_url },
+        { image: image?.secure_url },
         { new: true }
       )
       res.send({

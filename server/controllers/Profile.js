@@ -3,48 +3,57 @@ const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 
 exports.updateProfile = async (req, res) => {
-    try{
-        //get data
-        const {dateOfBirth="", about="", contactNumber, gender} = req.body;
+  try {
+      // extract data
+      const { gender = '', dateOfBirth = "", about = "", contactNumber = '', firstName, lastName } = req.body;
 
-        //get userId
-        const id = req.user.id;
+      // extract userId
+      const userId = req.user.id;
 
-        //validation
-        if(!contactNumber || !gender || !id) {
-            return res.status(400).json({
-                success:false,
-                message:'All fields are required',
-            });
-        } 
 
-        //find profile
-        const userDetails = await User.findById(id);
-        const profileId = userDetails.additionalDetails;
-        const profileDetails = await Profile.findById(profileId);
+      // find profile
+      const userDetails = await User.findById(userId);
+      const profileId = userDetails.additionalDetails;
+      const profileDetails = await Profile.findById(profileId);
 
-        //update profile
-        profileDetails.dateOfBirth = dateOfBirth;
-        profileDetails.about = about;
-        profileDetails.gender = gender;
-        profileDetails.contactNumber = contactNumber;
-        await profileDetails.save();
+      // console.log('User profileDetails -> ', profileDetails);
 
-        //return response
-        return res.status(200).json({
-            success:true,
-            message:'Profile Updated Successfully',
-            profileDetails,
-        });
+      // Update the profile fields
+      userDetails.firstName = firstName;
+      userDetails.lastName = lastName;
+      await userDetails.save()
 
-    }
-    catch(error) {
-        return res.status(500).json({
-            success:false,
-            error:error.message,
-        });
-    }
-};  
+      profileDetails.gender = gender;
+      profileDetails.dateOfBirth = dateOfBirth;
+      profileDetails.about = about;
+      profileDetails.contactNumber = contactNumber;
+
+      // save data to DB
+      await profileDetails.save();
+
+      const updatedUserDetails = await User.findById(userId)
+          .populate({
+              path: 'additionalDetails'
+          })
+      // console.log('updatedUserDetails -> ', updatedUserDetails);
+
+      // return response
+      res.status(200).json({
+          success: true,
+          updatedUserDetails,
+          message: 'Profile updated successfully'
+      });
+  }
+  catch (error) {
+      console.log('Error while updating profile');
+      console.log(error);
+      res.status(500).json({
+          success: false,
+          error: error.message,
+          message: 'Error while updating profile'
+      })
+  }
+} 
 
 
 //deleteAccount

@@ -38,6 +38,7 @@ const Catalog = () => {
         if(categoryId) {
             getCategoryDetails();
         }
+        console.log(categoryId)
         
     },[categoryId]);
 

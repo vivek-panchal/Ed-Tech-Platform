@@ -36,9 +36,14 @@ const VideoDetailsSidebar = ({setReviewModal}) => {
         setActiveFlags();
     },[courseSectionData, courseEntireData, location.pathname])
 
+    const handleAddReview = () => {
+        console.log("I am inside Add handleAddReview")
+        setReviewModal(true);
+    }
+
   return (
     <>
-        <div>
+        <div className='text-white'>
             {/* for buttons and headings */}
             <div>
                 {/* for buttons */}
@@ -54,7 +59,7 @@ const VideoDetailsSidebar = ({setReviewModal}) => {
                     <div>
                         <IconBtn 
                             text="Add Review"
-                            onClick={() => setReviewModal(true)}
+                            onclick={() => handleAddReview()}
                         />
                     </div>
 
@@ -81,7 +86,7 @@ const VideoDetailsSidebar = ({setReviewModal}) => {
                                 <div>
                                     {course?.sectionName}
                                 </div>
-                                {/*  add icon here and handle rotate 180 logic */}
+                                {/* HW- add icon here and handle rotate 180 logic */}
                             </div>
 
                             {/* subSections */}

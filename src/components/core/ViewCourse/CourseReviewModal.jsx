@@ -45,7 +45,7 @@ const CourseReviewModal = ({setReviewModal}) => {
             <div>
                 <p>Add Review</p>
                 <button 
-                onClick={setReviewModal(false)}
+                onClick={() => setReviewModal(false)}
                 >
                     Close
                 </button>
@@ -107,6 +107,7 @@ const CourseReviewModal = ({setReviewModal}) => {
                             text="save"
                         />
                     </div>
+
 
                 </form>
 

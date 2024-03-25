@@ -1,7 +1,7 @@
 import React from "react";
 import { FooterLink2 } from "../../data/footer-links";
 import { Link } from "react-router-dom";
-import { ImGithub, ImLinkedin2 } from "react-icons/im";
+import { ImGithub, ImLinkedin2, ImTwitter } from "react-icons/im";
 
 
 // Images
@@ -190,6 +190,9 @@ const Footer = () => {
             </a>
             <a href="https://www.github.com/vivek-panchal" className="text-white p-3 hover:bg-richblack-700 rounded-full duration-300" target="_blank" rel="noopener noreferrer">
               <ImGithub size={17} />
+            </a>
+            <a href="https://twitter.com/Vivekpanchaal" className="text-white p-3 hover:bg-richblack-700 rounded-full duration-300" target="_blank" rel="noopener noreferrer">
+              <ImTwitter size={17} />
             </a>
           </div>
 

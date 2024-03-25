@@ -19,8 +19,8 @@ const Contact = () => {
           <ContactForm />
         </div>
       </div>
-      <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
-        {/* Reviws from Other Learner */}
+      {/* Reviws from Other Learner */}
+      <div className=" my-20 px-5 text-white ">
         <h1 className="text-center text-4xl font-semibold mt-8">
           Reviews from other learners
         </h1>

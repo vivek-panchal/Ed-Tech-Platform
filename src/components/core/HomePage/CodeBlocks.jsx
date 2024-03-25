@@ -64,7 +64,16 @@ const CodeBlocks = ({
                 >
                      <div className={`${backgroundGradient}`}></div>
 
-                   
+                    {/* <TypeAnimation
+                        sequence={[codeblock, 1000, ""]}
+                        cursor={true}
+                        repeat={Infinity}
+                        style={{
+                            whiteSpace: "pre-line",
+                            display: "block",
+                        }}
+                        omitDeletionAnimation={true}
+                    /> */}
                      <TypeAnimation
             sequence={[codeblock, 2000, ""]}
             repeat={Infinity}

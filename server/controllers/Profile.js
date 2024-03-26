@@ -8,11 +8,11 @@ const { convertSecondsToDuration } = require("../utils/secToDuration");
 exports.updateProfile = async (req, res) => {
 	try {
 		const { dateOfBirth = "", about = "", contactNumber } = req.body;
-		const id = req.user.id;
+		const id = req?.user.id;
 
 		// Find the profile by id
 		const userDetails = await User.findById(id);
-		const profile = await Profile.findById(userDetails.additionalDetails);
+		const profile = await Profile.findById(userDetails?.additionalDetails);
 
 		// Update the profile fields
 		profile.dateOfBirth = dateOfBirth;
@@ -20,7 +20,7 @@ exports.updateProfile = async (req, res) => {
 		profile.contactNumber = contactNumber;
 
 		// Save the updated profile
-		await profile.save();
+		await profile?.save();
 
 		return res.json({
 			success: true,
@@ -137,6 +137,7 @@ exports.getEnrolledCourses = async (req, res) => {
 		.exec()
 
 	  userDetails = userDetails.toObject()
+	  console.log(userDetails)
 	  var SubsectionLength = 0
 	  for (var i = 0; i < userDetails.courses.length; i++) {
 		let totalDurationInSeconds = 0

@@ -60,7 +60,7 @@ exports.signup = async (req, res) => {
 		// Find the most recent OTP for the email
 		const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
 		console.log(response);
-		if (response.length === 0) {
+		if (response?.length === 0) {
 			// OTP not found for the email
 			return res.status(400).json({
 				success: false,
@@ -186,11 +186,11 @@ exports.login = async (req, res) => {
 // Send OTP For Email Verification
 exports.sendotp = async (req, res) => {
 	try {
-		const { email } = req.body;
+		const { email } = req?.body;
 
 		// Check if user is already present
 		// Find user with provided email
-		const checkUserPresent = await User.findOne({ email });
+		const checkUserPresent = await User?.findOne({ email });
 		// to be used in case of signup
 
 		// If user found with provided email
@@ -202,7 +202,7 @@ exports.sendotp = async (req, res) => {
 			});
 		}
 
-		var otp = otpGenerator.generate(6, {
+		var otp = otpGenerator?.generate(6, {
 			upperCaseAlphabets: false,
 			lowerCaseAlphabets: false,
 			specialChars: false,

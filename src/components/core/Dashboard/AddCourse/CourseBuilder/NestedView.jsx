@@ -1,203 +1,184 @@
-import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
-import { toast } from "react-hot-toast"
-import { RxCross2 } from "react-icons/rx"
+import { useState } from "react"
+import { AiFillCaretDown } from "react-icons/ai"
+import { FaPlus } from "react-icons/fa"
+import { MdEdit } from "react-icons/md"
+import { RiDeleteBin6Line } from "react-icons/ri"
+import { RxDropdownMenu } from "react-icons/rx"
 import { useDispatch, useSelector } from "react-redux"
 
 import {
-  createSubSection,
-  updateSubSection,
+  deleteSection,
+  deleteSubSection,
 } from "../../../../../services/operations/courseDetailsAPI"
 import { setCourse } from "../../../../../slices/courseSlice"
-import IconBtn from "../../../../common/IconBtn"
-import Upload from "../Upload"
+import ConfirmationModal from "../../../../common/ConfirmationModal"
+import SubSectionModal from "./SubSectionModal"
 
-export default function SubSectionModal({
-  modalData,
-  setModalData,
-  add = false,
-  view = false,
-  edit = false,
-}) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-    getValues,
-  } = useForm()
-
-  // console.log("view", view)
-  // console.log("edit", edit)
-  // console.log("add", add)
-
-  const dispatch = useDispatch()
-  const [loading, setLoading] = useState(false)
-  const { token } = useSelector((state) => state.auth)
+export default function NestedView({ handleChangeEditSectionName }) {
   const { course } = useSelector((state) => state.course)
+  const { token } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
+  // States to keep track of mode of modal [add, view, edit]
+  const [addSubSection, setAddSubsection] = useState(null)
+  const [viewSubSection, setViewSubSection] = useState(null)
+  const [editSubSection, setEditSubSection] = useState(null)
+  // to keep track of confirmation modal
+  const [confirmationModal, setConfirmationModal] = useState(null)
 
-  useEffect(() => {
-    if (view || edit) {
-      // console.log("modalData", modalData)
-      setValue("lectureTitle", modalData.title)
-      setValue("lectureDesc", modalData.description)
-      setValue("lectureVideo", modalData.videoUrl)
+  const handleDeleleSection = async (sectionId) => {
+    const result = await deleteSection({
+      sectionId,
+      courseId: course._id,
+      token,
+    })
+    if (result) {
+      dispatch(setCourse(result))
     }
-  }, [])
-
-  // detect whether form is updated or not
-  const isFormUpdated = () => {
-    const currentValues = getValues()
-    // console.log("changes after editing form values:", currentValues)
-    if (
-      currentValues.lectureTitle !== modalData.title ||
-      currentValues.lectureDesc !== modalData.description ||
-      currentValues.lectureVideo !== modalData.videoUrl
-    ) {
-      return true
-    }
-    return false
+    setConfirmationModal(null)
   }
 
-  // handle the editing of subsection
-  const handleEditSubsection = async () => {
-    const currentValues = getValues()
-    // console.log("changes after editing form values:", currentValues)
-    const formData = new FormData()
-    // console.log("Values After Editing form values:", currentValues)
-    formData.append("sectionId", modalData.sectionId)
-    formData.append("subSectionId", modalData._id)
-    if (currentValues.lectureTitle !== modalData.title) {
-      formData.append("title", currentValues.lectureTitle)
-    }
-    if (currentValues.lectureDesc !== modalData.description) {
-      formData.append("description", currentValues.lectureDesc)
-    }
-    if (currentValues.lectureVideo !== modalData.videoUrl) {
-      formData.append("video", currentValues.lectureVideo)
-    }
-    setLoading(true)
-    const result = await updateSubSection(formData, token)
+  const handleDeleteSubSection = async (subSectionId, sectionId) => {
+    const result = await deleteSubSection({ subSectionId, sectionId, token })
     if (result) {
-      // console.log("result", result)
       // update the structure of course
       const updatedCourseContent = course.courseContent.map((section) =>
-        section._id === modalData.sectionId ? result : section
+        section._id === sectionId ? result : section
       )
       const updatedCourse = { ...course, courseContent: updatedCourseContent }
       dispatch(setCourse(updatedCourse))
     }
-    setModalData(null)
-    setLoading(false)
-  }
-
-  const onSubmit = async (data) => {
-    // console.log(data)
-    if (view) return
-
-    if (edit) {
-      if (!isFormUpdated()) {
-        toast.error("No changes made to the form")
-      } else {
-        handleEditSubsection()
-      }
-      return
-    }
-
-    const formData = new FormData()
-    formData.append("sectionId", modalData)
-    formData.append("title", data.lectureTitle)
-    formData.append("description", data.lectureDesc)
-    formData.append("video", data.lectureVideo)
-    setLoading(true)
-    const result = await createSubSection(formData, token)
-    if (result) {
-      // update the structure of course
-      const updatedCourseContent = course.courseContent.map((section) =>
-        section._id === modalData ? result : section
-      )
-      const updatedCourse = { ...course, courseContent: updatedCourseContent }
-      dispatch(setCourse(updatedCourse))
-    }
-    setModalData(null)
-    setLoading(false)
+    setConfirmationModal(null)
   }
 
   return (
-    <div className="fixed inset-0 z-[1000] !mt-0 grid h-screen w-screen place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
-      <div className="my-10 w-11/12 max-w-[700px] rounded-lg border border-richblack-400 bg-richblack-800">
-        {/* Modal Header */}
-        <div className="flex items-center justify-between rounded-t-lg bg-richblack-700 p-5">
-          <p className="text-xl font-semibold text-richblack-5">
-            {view && "Viewing"} {add && "Adding"} {edit && "Editing"} Lecture
-          </p>
-          <button onClick={() => (!loading ? setModalData(null) : {})}>
-            <RxCross2 className="text-2xl text-richblack-5" />
-          </button>
-        </div>
-        {/* Modal Form */}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-8 px-8 py-10"
-        >
-          {/* Lecture Video Upload */}
-          <Upload
-            name="lectureVideo"
-            label="Lecture Video"
-            register={register}
-            setValue={setValue}
-            errors={errors}
-            video={true}
-            viewData={view ? modalData.videoUrl : null}
-            editData={edit ? modalData.videoUrl : null}
-          />
-          {/* Lecture Title */}
-          <div className="flex flex-col space-y-2">
-            <label className="text-sm text-richblack-5" htmlFor="lectureTitle">
-              Lecture Title {!view && <sup className="text-pink-200">*</sup>}
-            </label>
-            <input
-              disabled={view || loading}
-              id="lectureTitle"
-              placeholder="Enter Lecture Title"
-              {...register("lectureTitle", { required: true })}
-              className="form-style w-full"
-            />
-            {errors.lectureTitle && (
-              <span className="ml-2 text-xs tracking-wide text-pink-200">
-                Lecture title is required
-              </span>
-            )}
-          </div>
-          {/* Lecture Description */}
-          <div className="flex flex-col space-y-2">
-            <label className="text-sm text-richblack-5" htmlFor="lectureDesc">
-              Lecture Description{" "}
-              {!view && <sup className="text-pink-200">*</sup>}
-            </label>
-            <textarea
-              disabled={view || loading}
-              id="lectureDesc"
-              placeholder="Enter Lecture Description"
-              {...register("lectureDesc", { required: true })}
-              className="form-style resize-x-none min-h-[130px] w-full"
-            />
-            {errors.lectureDesc && (
-              <span className="ml-2 text-xs tracking-wide text-pink-200">
-                Lecture Description is required
-              </span>
-            )}
-          </div>
-          {!view && (
-            <div className="flex justify-end">
-              <IconBtn
-                disabled={loading}
-                text={loading ? "Loading.." : edit ? "Save Changes" : "Save"}
-              />
+    <>
+      <div
+        className="rounded-lg bg-richblack-700 p-6 px-8"
+        id="nestedViewContainer"
+      >
+        {course?.courseContent?.map((section) => (
+          // Section Dropdown
+          <details key={section._id} open>
+            {/* Section Dropdown Content */}
+            <summary className="flex cursor-pointer items-center justify-between border-b-2 border-b-richblack-600 py-2">
+              <div className="flex items-center gap-x-3">
+                <RxDropdownMenu className="text-2xl text-richblack-50" />
+                <p className="font-semibold text-richblack-50">
+                  {section.sectionName}
+                </p>
+              </div>
+              <div className="flex items-center gap-x-3">
+                <button
+                  onClick={() =>
+                    handleChangeEditSectionName(
+                      section._id,
+                      section.sectionName
+                    )
+                  }
+                >
+                  <MdEdit className="text-xl text-richblack-300" />
+                </button>
+                <button
+                  onClick={() =>
+                    setConfirmationModal({
+                      text1: "Delete this Section?",
+                      text2: "All the lectures in this section will be deleted",
+                      btn1Text: "Delete",
+                      btn2Text: "Cancel",
+                      btn1Handler: () => handleDeleleSection(section._id),
+                      btn2Handler: () => setConfirmationModal(null),
+                    })
+                  }
+                >
+                  <RiDeleteBin6Line className="text-xl text-richblack-300" />
+                </button>
+                <span className="font-medium text-richblack-300">|</span>
+                <AiFillCaretDown className={`text-xl text-richblack-300`} />
+              </div>
+            </summary>
+            <div className="px-6 pb-4">
+              {/* Render All Sub Sections Within a Section */}
+              {section.subSection.map((data) => (
+                <div
+                  key={data?._id}
+                  onClick={() => setViewSubSection(data)}
+                  className="flex cursor-pointer items-center justify-between gap-x-3 border-b-2 border-b-richblack-600 py-2"
+                >
+                  <div className="flex items-center gap-x-3 py-2 ">
+                    <RxDropdownMenu className="text-2xl text-richblack-50" />
+                    <p className="font-semibold text-richblack-50">
+                      {data.title}
+                    </p>
+                  </div>
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center gap-x-3"
+                  >
+                    <button
+                      onClick={() =>
+                        setEditSubSection({ ...data, sectionId: section._id })
+                      }
+                    >
+                      <MdEdit className="text-xl text-richblack-300" />
+                    </button>
+                    <button
+                      onClick={() =>
+                        setConfirmationModal({
+                          text1: "Delete this Sub-Section?",
+                          text2: "This lecture will be deleted",
+                          btn1Text: "Delete",
+                          btn2Text: "Cancel",
+                          btn1Handler: () =>
+                            handleDeleteSubSection(data._id, section._id),
+                          btn2Handler: () => setConfirmationModal(null),
+                        })
+                      }
+                    >
+                      <RiDeleteBin6Line className="text-xl text-richblack-300" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {/* Add New Lecture to Section */}
+              <button
+                onClick={() => setAddSubsection(section._id)}
+                className="mt-3 flex items-center gap-x-1 text-yellow-50"
+              >
+                <FaPlus className="text-lg" />
+                <p>Add Lecture</p>
+              </button>
             </div>
-          )}
-        </form>
+          </details>
+        ))}
       </div>
-    </div>
+      {/* Modal Display */}
+      {addSubSection ? (
+        <SubSectionModal
+          modalData={addSubSection}
+          setModalData={setAddSubsection}
+          add={true}
+        />
+      ) : viewSubSection ? (
+        <SubSectionModal
+          modalData={viewSubSection}
+          setModalData={setViewSubSection}
+          view={true}
+        />
+      ) : editSubSection ? (
+        <SubSectionModal
+          modalData={editSubSection}
+          setModalData={setEditSubSection}
+          edit={true}
+        />
+      ) : (
+        <></>
+      )}
+      {/* Confirmation Modal */}
+      {confirmationModal ? (
+        <ConfirmationModal modalData={confirmationModal} />
+      ) : (
+        <></>
+      )}
+    </>
   )
 }

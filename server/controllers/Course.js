@@ -451,7 +451,7 @@ exports.deleteCourse = async (req, res) => {
     }
 
     // Unenroll students from the course
-    const studentsEnrolled = course.studentsEnroled
+    const studentsEnrolled = course?.studentsEnrolled
     for (const studentId of studentsEnrolled) {
       await User.findByIdAndUpdate(studentId, {
         $pull: { courses: courseId },
@@ -459,12 +459,12 @@ exports.deleteCourse = async (req, res) => {
     }
 
     // Delete sections and sub-sections
-    const courseSections = course.courseContent
+    const courseSections = course?.courseContent
     for (const sectionId of courseSections) {
       // Delete sub-sections of the section
       const section = await Section.findById(sectionId)
       if (section) {
-        const subSections = section.subSection
+        const subSections = section?.subSection
         for (const subSectionId of subSections) {
           await SubSection.findByIdAndDelete(subSectionId)
         }

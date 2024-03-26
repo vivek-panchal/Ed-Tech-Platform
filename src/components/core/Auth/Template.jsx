@@ -27,7 +27,7 @@ function Template({ title, description1, description2, image, formType }) {
           <Img
             src={image}
             alt={formType}
-            className={' min-w-[105%] h-full text-white'}
+            className={' min-w-[125%] h-full text-white'}
           />
         </div>
       </div>

@@ -21,7 +21,7 @@ const Contact = () => {
         </div>
       </div>
       {/* Reviws from Other Learner */}
-      <div className=" my-20 px-5 text-white ">
+      <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
          <h1 className="text-center text-3xl lg:text-4xl font-semibold mt-8 flex justify-center items-center gap-x-3">
               Reviews from other learners <MdOutlineRateReview className='text-yellow-25' />
           </h1>

@@ -4,9 +4,11 @@ import Img from './Img';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react"
+import { Autoplay, FreeMode, Pagination } from "swiper"
 import "swiper/css"
 import "swiper/css/free-mode"
 import "swiper/css/pagination"
+import "swiper/css/autoplay"
 
 // Icons
 import { FaStar } from "react-icons/fa"
@@ -17,7 +19,7 @@ import { ratingsEndpoints } from "../../services/apis"
 
 
 function ReviewSlider() {
-  const [reviews, setReviews] = useState(null)
+  const [reviews, setReviews] = useState([])
   const truncateWords = 15
 
   useEffect(() => {
@@ -32,8 +34,7 @@ function ReviewSlider() {
     })()
   }, [])
 
-  // console.log('reviews= ', reviews)
-  if(!reviews) return;
+ 
 
   return (
     <div className="text-white">
@@ -58,6 +59,7 @@ function ReviewSlider() {
             delay: 2500,
             disableOnInteraction: false,
           }}
+          modules={[FreeMode, Pagination, Autoplay]}
           className="w-full "
         >
           {reviews.map((review, i) => {

@@ -13,7 +13,7 @@ import StatsComponenet from "../components/core/AboutPage/Stats"
 import HighlightText from "../components/core/HomePage/HighlightText"
 import Img from "../components/common/Img"
 import ReviewSlider from './../components/common/ReviewSlider';
-
+import { MdOutlineRateReview } from 'react-icons/md'
 import { motion } from 'framer-motion';
 import { fadeIn } from "../components/common/motionFrameVarients"
 
@@ -148,8 +148,9 @@ const About = () => {
 
       {/* Reviws from Other Learner */}
       <div className=" my-20 px-5 text-white ">
-        <h1 className="text-center text-4xl font-semibold mt-8">
-          Reviews from other learners
+        {/* Reviws from Other Learner */}
+        <h1 className="text-center text-3xl lg:text-4xl font-semibold mt-8 flex justify-center items-center gap-x-3">
+            Reviews from other learners <MdOutlineRateReview className='text-yellow-25' />
         </h1>
         <ReviewSlider />
       </div>

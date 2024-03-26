@@ -7,14 +7,14 @@ import studyNotionLogo from '../../assets/Logo/Logo-Full-Light.png'
 import { fetchCourseCategories } from './../../services/operations/courseDetailsAPI';
 
 import ProfileDropDown from '../core/Auth/ProfileDropDown'
-//import MobileProfileDropDown from '../core/Auth/MobileProfileDropDown'
+import MobileProfileDropDown from '../core/Auth/MobileProfileDropDown'
 
 import { AiOutlineShoppingCart } from "react-icons/ai"
 import { MdKeyboardArrowDown } from "react-icons/md"
 
 
 const Navbar = () => {
-    // console.log("Printing base url: ", import.meta.env.VITE_APP_BASE_URL);
+    
     const { token } = useSelector((state) => state.auth);
     const { user } = useSelector((state) => state.profile);
     // console.log('USER data from Navbar (store) = ', user)
@@ -23,7 +23,6 @@ const Navbar = () => {
 
     const [subLinks, setSubLinks] = useState([]);
     const [loading, setLoading] = useState(false);
-
 
     const fetchSublinks = async () => {
         try {
@@ -38,17 +37,14 @@ const Navbar = () => {
         setLoading(false)
     }
 
-   
     useEffect(() => {
         fetchSublinks();
     }, [])
-
 
     // when user click Navbar link then it will hold yellow color
     const matchRoute = (route) => {
         return matchPath({ path: route }, location.pathname);
     }
-
 
     // when user scroll down , we will hide navbar , and if suddenly scroll up , we will show navbar 
     const [showNavbar, setShowNavbar] = useState('top');
@@ -77,7 +73,7 @@ const Navbar = () => {
 
     return (
         <nav className={`z-[10] flex h-14 w-full items-center justify-center border-b-[1px] border-b-richblack-700 text-white translate-y-0 transition-all ${showNavbar} `}>
-             {/* <nav className={` fixed flex items-center justify-center w-full h-16 z-[10] translate-y-0 transition-all text-white ${showNavbar}`}> */}
+    
             <div className='flex w-11/12 max-w-maxContent items-center justify-between '>
                 {/* logo */}
                 <Link to="/">
@@ -137,9 +133,6 @@ const Navbar = () => {
                         ))}
                 </ul>
 
-
-
-
                 {/* Login/SignUp/Dashboard */}
                 <div className='flex gap-x-4 items-center'>
                     {
@@ -157,7 +150,6 @@ const Navbar = () => {
                     {
                         token === null && (
                             <Link to="/login">
-                                {/* <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md focus:outline-8 outline-yellow-50'> */}
                                 <button className={` px-[12px] py-[8px] text-richblack-100 rounded-md 
                                  ${matchRoute('/login') ? 'border-[2.5px] border-yellow-50' : 'border border-richblack-700 bg-richblack-800'} `}
                                 >
@@ -169,7 +161,7 @@ const Navbar = () => {
                     {
                         token === null && (
                             <Link to="/signup">
-                                {/* <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md'> */}
+                            
                                 <button className={` px-[12px] py-[8px] text-richblack-100 rounded-md 
                                  ${matchRoute('/signup') ? 'border-[2.5px] border-yellow-50' : 'border border-richblack-700 bg-richblack-800'} `}
                                 >
@@ -183,7 +175,7 @@ const Navbar = () => {
                     {token !== null && <ProfileDropDown />}
 
                     {/* for small devices */}
-                    {/*token !== null && <MobileProfileDropDown />*/}
+                    {token !== null && <MobileProfileDropDown />}
 
                 </div>
             </div>

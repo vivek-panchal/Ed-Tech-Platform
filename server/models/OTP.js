@@ -32,6 +32,7 @@ async function sendVerificationEmail(email, otp) {
 			emailTemplate(otp)
 		);
 		console.log("Email sent successfully: ", mailResponse?.response);
+		console.log("mail repose 2 " , mailResponse)
 	} catch (error) {
 		console.log("Error occurred while sending email: ", error);
 		throw error;

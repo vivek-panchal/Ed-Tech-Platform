@@ -13,7 +13,7 @@ The platform is built using the **MERN stack**, which includes ReactJS, NodeJS, 
 <hr/>
 
 
-<img width='100%' src='https://github.com/vivek-panchal/Ed-Tech-Platform/blob/main/screenshots/home1.png' />
+<img width='100%' src='https://github.com/vivek-panchal/Ed-Tech-Platform/blob/main/screenshots/home%201.png' />
 
 
 

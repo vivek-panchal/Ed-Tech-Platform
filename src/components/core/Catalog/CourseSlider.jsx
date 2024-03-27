@@ -22,7 +22,7 @@ const CourseSlider = ({Courses}) => {
           >
             {Courses?.map((course, i) => (
               <SwiperSlide key={i}>
-                <Course_Card course={course} Height={"h-[250px]"} />
+                <Course_Card course={course} Height={"h-[215px]"} />
               </SwiperSlide>
             ))}
           </Swiper>

@@ -148,14 +148,14 @@ const Home = () => {
                             }
                             ctabtn1={
                                 {
-                                    btnText: "try it yourself",
+                                    btnText: "Try it yourself",
                                     linkto: "/signup",
                                     active: true,
                                 }
                             }
                             ctabtn2={
                                 {
-                                    btnText: "learn more",
+                                    btnText: "Learn More",
                                     linkto: "/login",
                                     active: false,
                                 }
@@ -192,7 +192,7 @@ const Home = () => {
                                 active: false,
                             }}
                             codeColor={"text-white"}
-                            codeblock={`import React from "react";\n import CTAButton from "./Button";\nimport TypeAnimation from "react-type";\nimport { FaArrowRight } from "react-icons/fa";\n\nconst Home = () => {\nreturn (\n<div>Home</div>\n)\n}\nexport default Home;`}
+                            codeblock={`import React from "react";\n import CTAButton from "./Button";\nimport TypeAnimation from "react-type";\nimport { FaArrowRight } from "react-icons/fa";\n\nconst Home = () => {\nreturn (\n<div>Home</div>\n)}\nexport default Home;`}
                             backgroundGradient={"code-block2-grad"}
                         />
                     </div>

@@ -8,6 +8,8 @@ import Course_Card from '../components/core/Catalog/Course_Card';
 import CourseSlider from '../components/core/Catalog/CourseSlider';
 import { useSelector } from "react-redux"
 import Error from "./Error"
+import ReviewSlider from "../components/common/ReviewSlider"
+import { MdOutlineRateReview } from 'react-icons/md'
 
 const Catalog = () => {
 
@@ -105,12 +107,19 @@ const Catalog = () => {
                 <div className='py-8'>
                     <div className='grid grid-cols-1 gap-5 lg:grid-cols-3'>
                         {
-                            catalogPageData?.data?.mostSellingCourses?.slice(0,4)
+                            catalogPageData?.data?.mostSellingCourses?.slice(0,6)
                             .map((course, index) => (
                                 <Course_Card course={course} key={index} Height={"h-[220px]"}/>
                             ))
                         }
                     </div>
+                </div>
+                 {/* Reviws from Other Learner */}
+                <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
+                    <h1 className="text-center text-3xl lg:text-4xl font-semibold mt-8 flex justify-center items-center gap-x-3">
+                        Reviews from other learners <MdOutlineRateReview className='text-yellow-25' />
+                    </h1>
+                    <ReviewSlider />
                 </div>
             </div>
         <Footer />

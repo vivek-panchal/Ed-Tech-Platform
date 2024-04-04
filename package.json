@@ -5,6 +5,8 @@
   "dependencies": {
     "@ramonak/react-progress-bar": "^5.2.0",
     "@reduxjs/toolkit": "^2.2.1",
+    "@vercel/analytics": "^1.2.2",
+    "@vercel/speed-insights": "^1.0.10",
     "axios": "^1.6.7",
     "chart.js": "^4.4.2",
     "concurrently": "^8.0.1",

@@ -3,7 +3,8 @@ import {Route, Routes,useNavigate } from "react-router-dom";
 import Home from "./pages/Home"
 import Navbar from "./components/common/Navbar"
 import OpenRoute from "./components/core/Auth/OpenRoute"
-
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import ForgotPassword from "./pages/ForgotPassword";
@@ -149,6 +150,9 @@ function App() {
       </Route>
       <Route path="*" element={<Error />} />
     </Routes>
+
+    <SpeedInsights />
+    <Analytics />
    </div>
   );
 }
